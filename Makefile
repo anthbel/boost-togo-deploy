@@ -18,7 +18,7 @@ STEPS ?=
 FILE ?=
 CONFIRM ?=
 
-.PHONY: help install up down restart status logs follow pipeline first-load refresh-boundaries steps \
+.PHONY: help install up down restart status logs follow pipeline refresh-boundaries steps \
         backup restore cache-clear psql fetch build package
 
 help: ## List the targets
@@ -59,12 +59,6 @@ follow: ## Follow the logs live (Ctrl+C to stop)
 
 pipeline: ## Load the data: every step, or STEPS='step1 step2'
 	$(COMPOSE) run --rm pipeline $(if $(STEPS),--only $(STEPS))
-
-# On a new database country.py runs before the boundaries it reads exist, and
-# the steps reading the country table fail; a second pass completes them.
-first-load: ## First load of a new database: the pipeline twice
-	-$(COMPOSE) run --rm pipeline
-	$(COMPOSE) run --rm pipeline
 
 refresh-boundaries: ## Download the World Bank boundary files again at the next pipeline run
 	$(COMPOSE) run --rm --entrypoint sh pipeline -c 'rm -fv "$$DDH_BOUNDARIES_DIR"/*.geojson'

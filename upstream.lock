@@ -6,18 +6,18 @@
 # Togo (DASHBOARD_COMMITS then holds one SHA and DASHBOARD_TREE is its tree).
 DASHBOARD_URL=https://github.com/dime-worldbank/rpf-country-dash.git
 DASHBOARD_REFS="refs/heads/main refs/heads/Togo"
-DASHBOARD_COMMITS="4a2665eedcee3600ef1fc5a83f9ce60d16dba79c 885d1983b6d71d008b5e0712c5cf8328634fcb53"
-DASHBOARD_TREE=635acc8751ee4536180aa88ecbcfab1485d79355
+DASHBOARD_COMMITS="4a2665eedcee3600ef1fc5a83f9ce60d16dba79c eb47a113ed597286e25a8ce17effe6b947778dfa"
+DASHBOARD_TREE=2de195ce3d2ca4f473dbbecdbf40d4ee800c1c14
 
-# Indicator ETL: only the folders of the notebooks in local_runner.NOTEBOOKS
+# Indicator ETL: only the folders of the notebooks local_runner.notebooks() lists
 # (the repository's top-level files are always checked out).
 INDICATORS_URL=https://github.com/dime-worldbank/mega-indicators.git
-INDICATORS_REF=refs/pull/45/head
-INDICATORS_COMMIT=0fb08259c2b97fc6780b675af1f63174530eb49f
+INDICATORS_REF=refs/heads/main
+INDICATORS_COMMIT=f3ba605a9ec4f5451b0a6fbc3e632e7150fd0ab6
 INDICATORS_PATHS="education geo health human_development pefa population poverty public_finance"
 
 # Togo BOOST ETL.
 BOOST_URL=https://github.com/dime-worldbank/mega-boost.git
-BOOST_REF=refs/pull/68/head
-BOOST_COMMIT=3e8e42a529b3c7960b910aa55a1d65f93473d042
+BOOST_REF=refs/heads/main
+BOOST_COMMIT=f6db6954b114255db9e1d7e5fc96f1f0ab976ccc
 BOOST_PATHS="Togo"

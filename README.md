@@ -7,7 +7,7 @@ dashboard or ETL code.
 | Upstream repository | Used | Image |
 |---|---|---|
 | [rpf-country-dash](https://github.com/dime-worldbank/rpf-country-dash) | the dashboard | `boost-togo/dashboard` |
-| [mega-indicators](https://github.com/dime-worldbank/mega-indicators) | the notebooks in `local_runner.NOTEBOOKS` | `boost-togo/pipeline` |
+| [mega-indicators](https://github.com/dime-worldbank/mega-indicators) | the notebooks `local_runner.notebooks()` lists | `boost-togo/pipeline` |
 | [mega-boost](https://github.com/dime-worldbank/mega-boost) | `Togo/` | `boost-togo/pipeline` |
 
 ## Layout
@@ -30,8 +30,8 @@ dashboard or ETL code.
 - **Dashboard:** upstream `main` (PostgreSQL backend) merged with `Togo`
   (Togo view). The fetch stops if the merge does not give the tree in
   `DASHBOARD_TREE`.
-- **ETL:** mega-indicators pull request #45 and mega-boost pull request #68,
-  only the folders in `INDICATORS_PATHS` and `BOOST_PATHS`.
+- **ETL:** mega-indicators `main` and mega-boost `main`, only the folders in
+  `INDICATORS_PATHS` and `BOOST_PATHS`.
 
 To move a pin, edit `upstream.lock` (for the dashboard, the new tree is
 `git merge-tree --write-tree <main> <Togo>`), then `make fetch build` and
@@ -48,7 +48,7 @@ check the dashboard.
 ```bash
 cp .env.example .env    # fill in the secrets
 make fetch build up
-make first-load
+make pipeline
 ```
 
 The dashboard listens on `127.0.0.1:8080` (`DASHBOARD_BIND`); serve it
@@ -68,9 +68,6 @@ A second copy on the same machine needs its own `COMPOSE_PROJECT_NAME` and
 A failed step does not stop the others. At the end the dashboard cache is
 cleared and a summary printed; the exit code is 1 if a step failed.
 `make steps` lists the steps; `make pipeline STEPS="…"` runs some of them.
-
-`make first-load` runs the pipeline twice: on a new database, `country.py`
-runs before the boundaries it needs exist.
 
 The World Bank boundary files (430 MB) are downloaded once and kept in the
 `ddhcache` volume. `make refresh-boundaries` downloads them again on the next
@@ -101,15 +98,13 @@ template, a dump of the indicator tables, and `VERSION` with the upstream
 commits.
 
 On the server: `sudo ./prerequisites.sh`, then `./install.sh`, then
-`make first-load`.
+`make pipeline`.
 
 ## Known limitations
 
-- The dashboard opens in English on every page load; `DEFAULT_LANGUAGE` is
-  not read (rpf-country-dash pull request #51).
-- The country selector is shown with one country (#52).
-- The French wording fixes (#49) and the spending narrative fixes (#50) are
-  not included.
+- The country selector is shown with one country (rpf-country-dash pull
+  request #52).
+- The spending narrative fixes (#50) are not included.
 - Without the PEFA files, the overview says Togo has no PEFA assessment.
 
 ## Licence

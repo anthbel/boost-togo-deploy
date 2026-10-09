@@ -6,7 +6,9 @@ Steps, in this order:
                                pefa_2016_bronze.csv, when present, into the
                                tables of the same name (upstream README,
                                "Required inputs")
-  mega-indicators/<notebook>   local_runner.NOTEBOOKS, in upstream's order
+  mega-indicators/<notebook>   local_runner.notebooks(): NOTEBOOKS, then the
+                               subnational population step of COUNTRY_NAME,
+                               in upstream's order
   mega-boost/Togo/<script>     TGO_ETL.py, then TGO_aggregate.py
 
 Each step runs in its own process and a failed step does not stop the
@@ -53,7 +55,7 @@ LOAD_CSV = (
 def notebooks():
     sys.path.insert(0, INDICATORS)
     import local_runner
-    return list(local_runner.NOTEBOOKS)
+    return local_runner.notebooks()
 
 
 def steps():
