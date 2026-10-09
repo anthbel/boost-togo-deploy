@@ -1,0 +1,8 @@
+*
+!upstream/mega-indicators
+!upstream/mega-boost
+!docker/etl-requirements.txt
+!docker/etl-run.py
+upstream/**/.git
+**/__pycache__
+**/*.pyc

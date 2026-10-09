@@ -1,0 +1,23 @@
+# The upstream code this repository builds, pinned by commit. Read by
+# scripts/fetch-upstream.sh, which checks every value below.
+#
+# Dashboard: the merge of two upstream commits, checked against the tree it
+# must produce. A single commit replaces them once upstream merges main into
+# Togo (DASHBOARD_COMMITS then holds one SHA and DASHBOARD_TREE is its tree).
+DASHBOARD_URL=https://github.com/dime-worldbank/rpf-country-dash.git
+DASHBOARD_REFS="refs/heads/main refs/heads/Togo"
+DASHBOARD_COMMITS="4a2665eedcee3600ef1fc5a83f9ce60d16dba79c 885d1983b6d71d008b5e0712c5cf8328634fcb53"
+DASHBOARD_TREE=635acc8751ee4536180aa88ecbcfab1485d79355
+
+# Indicator ETL: only the folders of the notebooks in local_runner.NOTEBOOKS
+# (the repository's top-level files are always checked out).
+INDICATORS_URL=https://github.com/dime-worldbank/mega-indicators.git
+INDICATORS_REF=refs/pull/45/head
+INDICATORS_COMMIT=0fb08259c2b97fc6780b675af1f63174530eb49f
+INDICATORS_PATHS="education geo health human_development pefa population poverty public_finance"
+
+# Togo BOOST ETL.
+BOOST_URL=https://github.com/dime-worldbank/mega-boost.git
+BOOST_REF=refs/pull/68/head
+BOOST_COMMIT=3e8e42a529b3c7960b910aa55a1d65f93473d042
+BOOST_PATHS="Togo"

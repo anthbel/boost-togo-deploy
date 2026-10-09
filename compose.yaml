@@ -1,0 +1,92 @@
+name: boost-togo
+
+# Container logs are rotated by Docker: at most 5 files of 10 MB per container.
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "5"
+
+services:
+  db:
+    image: boost-togo/postgres:${RELEASE:-dev}
+    build:
+      context: ./docker
+      dockerfile: postgres.Dockerfile
+    restart: unless-stopped
+    logging: *logging
+    environment:
+      POSTGRES_DB: prd_mega
+      POSTGRES_USER: pipeline
+      POSTGRES_PASSWORD: ${PIPELINE_DB_PASSWORD:?set in .env}
+      DASHBOARD_DB_PASSWORD: ${DASHBOARD_DB_PASSWORD:?set in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      # Over TCP: during first-start initialisation PostgreSQL runs a temporary
+      # socket-only server, which must not count as ready.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U pipeline -d prd_mega"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  dashboard:
+    image: boost-togo/dashboard:${RELEASE:-dev}
+    build:
+      context: ./upstream/rpf-country-dash
+      dockerfile: ../../docker/dashboard.Dockerfile
+    restart: unless-stopped
+    logging: *logging
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_BACKEND: postgres
+      POSTGRES_DSN: postgresql://dashboard:${DASHBOARD_DB_PASSWORD}@db:5432/prd_mega
+      CACHE_REFRESH_TOKEN: ${CACHE_REFRESH_TOKEN:?set in .env}
+      AUTH_ENABLED: ${AUTH_ENABLED:-0}
+      SECRET_KEY: ${SECRET_KEY:?set in .env}
+      # Togo is not in upstream's boost_public list, so PUBLIC_ONLY=True
+      # would hide it.
+      PUBLIC_ONLY: ${PUBLIC_ONLY:-False}
+      COUNTRIES: ${COUNTRIES:-Togo}
+      DEFAULT_LANGUAGE: ${DEFAULT_LANGUAGE:-fr}
+      DEFAULT_ROOT_PATH: ${DEFAULT_ROOT_PATH:-/}
+      # One process: /api/cache/clear resets in-process caches (server_store)
+      # only in the worker that receives it. Scale with --threads, not --workers.
+      GUNICORN_CMD_ARGS: ${GUNICORN_CMD_ARGS:---workers 1 --threads 4 --timeout 120}
+    volumes:
+      - querycache:/var/cache/dash/queries
+    ports:
+      - "${DASHBOARD_BIND:-127.0.0.1:8080}:8080"
+
+  # The upstream ETL, on demand or from cron: docker compose run --rm pipeline
+  pipeline:
+    image: boost-togo/pipeline:${RELEASE:-dev}
+    build:
+      context: .
+      dockerfile: docker/etl.Dockerfile
+    profiles: ["pipeline"]
+    logging: *logging
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      POSTGRES_DSN: postgresql://pipeline:${PIPELINE_DB_PASSWORD}@db:5432/prd_mega
+      DASHBOARD_URL: http://dashboard:8080
+      CACHE_REFRESH_TOKEN: ${CACHE_REFRESH_TOKEN}
+      GDL_API_TOKEN: ${GDL_API_TOKEN:-}
+    volumes:
+      # Downloads and intermediate files (DATA_ROOT, OUTPUT_DIR), kept between runs.
+      - etldata:/var/lib/etl
+      # Boundary files at the Databricks volume path upstream reads before
+      # downloading; emptied by `make refresh-boundaries`.
+      - ddhcache:/Volumes/prd_development_data/files/ddh
+      - ${INPUT_DIR:-./data}:/data:ro
+
+volumes:
+  pgdata:
+  querycache:
+  etldata:
+  ddhcache:
