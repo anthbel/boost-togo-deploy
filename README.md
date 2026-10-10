@@ -102,9 +102,10 @@ On the server: `sudo ./prerequisites.sh`, then `./install.sh`, then
 
 ## Known limitations
 
-- The country selector is shown with one country (rpf-country-dash pull
-  request #52).
-- The spending narrative fixes (#50) are not included.
+- The spending narrative fixes (rpf-country-dash pull request #50) are not
+  included.
+- Some French sentences name the country without its article (« pour Togo »;
+  #53).
 - Without the PEFA files, the overview says Togo has no PEFA assessment.
 
 ## Licence
