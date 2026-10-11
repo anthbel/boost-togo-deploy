@@ -104,8 +104,6 @@ On the server: `sudo ./prerequisites.sh`, then `./install.sh`, then
 
 - The spending narrative fixes (rpf-country-dash pull request #50) are not
   included.
-- Some French sentences name the country without its article (« pour Togo »;
-  #53).
 - Without the PEFA files, the overview says Togo has no PEFA assessment.
 
 ## Licence

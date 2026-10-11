@@ -6,8 +6,8 @@
 # Togo (DASHBOARD_COMMITS then holds one SHA and DASHBOARD_TREE is its tree).
 DASHBOARD_URL=https://github.com/dime-worldbank/rpf-country-dash.git
 DASHBOARD_REFS="refs/heads/main refs/heads/Togo"
-DASHBOARD_COMMITS="4a2665eedcee3600ef1fc5a83f9ce60d16dba79c 566112ebf7aa1f7d07fa4efbd010278421d33583"
-DASHBOARD_TREE=493dca98bef669079c7abf291ec1296d9b095e72
+DASHBOARD_COMMITS="4a2665eedcee3600ef1fc5a83f9ce60d16dba79c 768161150e8f568209a920a72f495128e3461843"
+DASHBOARD_TREE=ba850e1eee4afd69a8fc69e2c2a6437af53bef22
 
 # Indicator ETL: only the folders of the notebooks local_runner.notebooks() lists
 # (the repository's top-level files are always checked out).
