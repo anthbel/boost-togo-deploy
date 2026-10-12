@@ -45,6 +45,22 @@ check the dashboard.
 
 ## Run
 
+On a new Ubuntu server, one script does every step: git 2.38 or later,
+clone into `/opt/boost-togo/boost-togo-deploy`, `deploy/prerequisites.sh`,
+`.env` with generated secrets, `make fetch build up` and `make pipeline`,
+as the `boost` service account:
+
+```bash
+curl -fsSLO https://raw.githubusercontent.com/anthbel/boost-togo-deploy/main/deploy/install-from-git.sh
+sudo bash install-from-git.sh --workbook 'BUDGET 2021 to 2025.xlsx' --pefa-dir pefa/
+```
+
+Ubuntu 22.04 ships git 2.34: add `--git-ppa` to install a recent git from
+`ppa:git-core/ppa`. `--help` lists the other options; running the script
+again updates the clone and keeps `.env`.
+
+By hand, from a clone:
+
 ```bash
 cp .env.example .env    # fill in the secrets
 make fetch build up
