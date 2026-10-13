@@ -52,6 +52,8 @@ services:
       PUBLIC_ONLY: ${PUBLIC_ONLY:-False}
       COUNTRIES: ${COUNTRIES:-Togo}
       DEFAULT_LANGUAGE: ${DEFAULT_LANGUAGE:-fr}
+      # Last year with closed accounts: charts of executed spending stop there.
+      END_YEAR: ${END_YEAR:-2025}
       DEFAULT_ROOT_PATH: ${DEFAULT_ROOT_PATH:-/}
       # One process: /api/cache/clear resets in-process caches (server_store)
       # only in the worker that receives it. Scale with --threads, not --workers.

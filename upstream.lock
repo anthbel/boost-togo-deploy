@@ -1,13 +1,15 @@
 # The upstream code this repository builds, pinned by commit. Read by
 # scripts/fetch-upstream.sh, which checks every value below.
 #
-# Dashboard: the merge of two upstream commits, checked against the tree it
-# must produce. A single commit replaces them once upstream merges main into
-# Togo (DASHBOARD_COMMITS then holds one SHA and DASHBOARD_TREE is its tree).
-DASHBOARD_URL=https://github.com/dime-worldbank/rpf-country-dash.git
-DASHBOARD_REFS="refs/heads/main refs/heads/Togo"
-DASHBOARD_COMMITS="4a2665eedcee3600ef1fc5a83f9ce60d16dba79c 768161150e8f568209a920a72f495128e3461843"
-DASHBOARD_TREE=ba850e1eee4afd69a8fc69e2c2a6437af53bef22
+# Dashboard: one commit, or the merge of two, checked against the tree it must
+# produce (DASHBOARD_TREE). The commit below is on the anthbel fork: it merges
+# upstream main (4a2665e) and Togo (7681611) with three branches not merged
+# upstream yet: fix/year-axis-category, fix/single-country-url and
+# feat/end-year-setting.
+DASHBOARD_URL=https://github.com/anthbel/rpf-country-dash.git
+DASHBOARD_REFS="refs/heads/togo/deploy-20261013"
+DASHBOARD_COMMITS="8df1a288a9a70de2f762d37507b46945b927151b"
+DASHBOARD_TREE=922bcaa82a4010943142bcd0c4613758029ee383
 
 # Indicator ETL: only the folders of the notebooks local_runner.notebooks() lists
 # (the repository's top-level files are always checked out).

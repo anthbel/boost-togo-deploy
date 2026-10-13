@@ -27,15 +27,16 @@ dashboard or ETL code.
 
 `make fetch` checks out the commits in `upstream.lock` under `upstream/`.
 
-- **Dashboard:** upstream `main` (PostgreSQL backend) merged with `Togo`
-  (Togo view). The fetch stops if the merge does not give the tree in
-  `DASHBOARD_TREE`.
+- **Dashboard:** a commit on the [anthbel fork](https://github.com/anthbel/rpf-country-dash)
+  that merges upstream `main` (PostgreSQL backend), `Togo` (Togo view) and the
+  branches `upstream.lock` names, not merged upstream yet. The fetch stops if
+  the commit does not give the tree in `DASHBOARD_TREE`.
 - **ETL:** mega-indicators `main` and mega-boost `main`, only the folders in
   `INDICATORS_PATHS` and `BOOST_PATHS`.
 
 To move a pin, edit `upstream.lock` (for the dashboard, the new tree is
-`git merge-tree --write-tree <main> <Togo>`), then `make fetch build` and
-check the dashboard.
+`git rev-parse <commit>^{tree}` for one commit, `git merge-tree --write-tree
+<main> <Togo>` for two), then `make fetch build` and check the dashboard.
 
 ## Requirements
 
@@ -105,6 +106,10 @@ In `data/` (`INPUT_DIR`):
 
 `GDL_API_TOKEN` in `.env` enables the Global Data Lab indicators. Without the
 token or the PEFA files, those tables stay empty and the other steps run.
+
+`END_YEAR` in `.env` (2025 when unset) is the last year with closed accounts:
+charts of executed spending stop there, charts of the budget alone do not.
+Raise it once the next year's accounts are closed, then `make up`.
 
 ## Offline package
 
