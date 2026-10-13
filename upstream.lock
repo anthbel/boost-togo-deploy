@@ -8,8 +8,8 @@
 # feat/end-year-setting.
 DASHBOARD_URL=https://github.com/anthbel/rpf-country-dash.git
 DASHBOARD_REFS="refs/heads/togo/deploy-20261013"
-DASHBOARD_COMMITS="8df1a288a9a70de2f762d37507b46945b927151b"
-DASHBOARD_TREE=922bcaa82a4010943142bcd0c4613758029ee383
+DASHBOARD_COMMITS="8c2817d560c4d012e2f3fa0f41b404e009652f9f"
+DASHBOARD_TREE=24680d70e4b089cb619b77c81539abac2306197c
 
 # Indicator ETL: only the folders of the notebooks local_runner.notebooks() lists
 # (the repository's top-level files are always checked out).
