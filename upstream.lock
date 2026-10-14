@@ -2,14 +2,13 @@
 # scripts/fetch-upstream.sh, which checks every value below.
 #
 # Dashboard: one commit, or the merge of two, checked against the tree it must
-# produce (DASHBOARD_TREE). The commit below is on the anthbel fork: it merges
-# upstream main (4a2665e) and Togo (7681611) with three branches not merged
-# upstream yet: fix/year-axis-category, fix/single-country-url and
-# feat/end-year-setting.
+# produce (DASHBOARD_TREE). The commit below is on the anthbel fork: upstream Togo
+# (a85edf6, which includes upstream main) merged with togo/execution-page, the
+# budget-execution page and its Excel export, not merged upstream yet.
 DASHBOARD_URL=https://github.com/anthbel/rpf-country-dash.git
-DASHBOARD_REFS="refs/heads/togo/deploy-20261013"
-DASHBOARD_COMMITS="8c2817d560c4d012e2f3fa0f41b404e009652f9f"
-DASHBOARD_TREE=24680d70e4b089cb619b77c81539abac2306197c
+DASHBOARD_REFS="refs/heads/togo/deploy-20261014"
+DASHBOARD_COMMITS="b6b06a20e372237f67be12c63c1200ff0b34792a"
+DASHBOARD_TREE=eafc26cf25ed1b75076230c59d05b21f0b4db4a4
 
 # Indicator ETL: only the folders of the notebooks local_runner.notebooks() lists
 # (the repository's top-level files are always checked out).
@@ -18,8 +17,9 @@ INDICATORS_REF=refs/heads/main
 INDICATORS_COMMIT=f3ba605a9ec4f5451b0a6fbc3e632e7150fd0ab6
 INDICATORS_PATHS="education geo health human_development pefa population poverty public_finance"
 
-# Togo BOOST ETL.
-BOOST_URL=https://github.com/dime-worldbank/mega-boost.git
-BOOST_REF=refs/heads/main
-BOOST_COMMIT=f6db6954b114255db9e1d7e5fc96f1f0ab976ccc
+# Togo BOOST ETL. The commit is on the anthbel fork: upstream main (f6db695) plus
+# Togo/TGO_execution.py, the budget-execution table, not merged upstream yet.
+BOOST_URL=https://github.com/anthbel/mega-boost.git
+BOOST_REF=refs/heads/togo/execution-fact
+BOOST_COMMIT=1593acef58bb5a85ec341960c49ebbef0c93895f
 BOOST_PATHS="Togo"

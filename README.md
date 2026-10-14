@@ -28,11 +28,12 @@ dashboard or ETL code.
 `make fetch` checks out the commits in `upstream.lock` under `upstream/`.
 
 - **Dashboard:** a commit on the [anthbel fork](https://github.com/anthbel/rpf-country-dash)
-  that merges upstream `main` (PostgreSQL backend), `Togo` (Togo view) and the
-  branches `upstream.lock` names, not merged upstream yet. The fetch stops if
-  the commit does not give the tree in `DASHBOARD_TREE`.
-- **ETL:** mega-indicators `main` and mega-boost `main`, only the folders in
-  `INDICATORS_PATHS` and `BOOST_PATHS`.
+  that merges upstream `Togo` (which includes upstream `main`) with the branch
+  `upstream.lock` names, not merged upstream yet. The fetch stops if the commit
+  does not give the tree in `DASHBOARD_TREE`.
+- **ETL:** mega-indicators `main`; mega-boost from a commit on the
+  [anthbel fork](https://github.com/anthbel/mega-boost) (upstream `main` plus the
+  Togo execution table), only the folders in `INDICATORS_PATHS` and `BOOST_PATHS`.
 
 To move a pin, edit `upstream.lock` (for the dashboard, the new tree is
 `git rev-parse <commit>^{tree}` for one commit, `git merge-tree --write-tree
