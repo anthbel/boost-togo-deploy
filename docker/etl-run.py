@@ -9,7 +9,8 @@ Steps, in this order:
   mega-indicators/<notebook>   local_runner.notebooks(): NOTEBOOKS, then the
                                subnational population step of COUNTRY_NAME,
                                in upstream's order
-  mega-boost/Togo/<script>     TGO_ETL.py, then TGO_aggregate.py
+  mega-boost/Togo/<script>     TGO_ETL.py, TGO_aggregate.py, then
+                               TGO_execution.py
 
 Each step runs in its own process and a failed step does not stop the
 others. After a successful geo/admin_boundaries_extract.py the two boundary
@@ -36,7 +37,7 @@ INDICATORS = os.path.join(UPSTREAM, "mega-indicators")
 BOOST_TOGO = os.path.join(UPSTREAM, "mega-boost", "Togo")
 PEFA_DIR = os.environ.get("PEFA_DIR", "/data/pefa")
 PEFA_TABLES = ["pefa_2011_bronze", "pefa_2016_bronze"]
-BOOST_SCRIPTS = ["TGO_ETL.py", "TGO_aggregate.py"]
+BOOST_SCRIPTS = ["TGO_ETL.py", "TGO_aggregate.py", "TGO_execution.py"]
 BOUNDARIES_EXTRACT = "mega-indicators/geo/admin_boundaries_extract.py"
 # Where the extract writes the downloaded GeoJSON files (VOLUME_ROOT_PATH in config.py),
 # and the Databricks volume path ddh_bytes checks first (utils.ddh_volume_path of the URLs).

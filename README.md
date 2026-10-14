@@ -80,7 +80,7 @@ A second copy on the same machine needs its own `COMPOSE_PROJECT_NAME` and
 
 1. `inputs/pefa_bronze`: loads the PEFA CSV files from `data/pefa/`, if any.
 2. The mega-indicators notebooks, in upstream's order.
-3. `mega-boost/Togo/TGO_ETL.py`, then `TGO_aggregate.py`.
+3. `mega-boost/Togo/TGO_ETL.py`, `TGO_aggregate.py`, then `TGO_execution.py`.
 
 A failed step does not stop the others. At the end the dashboard cache is
 cleared and a summary printed; the exit code is 1 if a step failed.
