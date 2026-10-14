@@ -5,11 +5,12 @@
 # produce (DASHBOARD_TREE). The commit below is on the anthbel fork: upstream Togo
 # (a85edf6, which includes upstream main) merged with togo/execution-page, the
 # budget-execution page and its Excel exports (own tables, SIGFIP report tables,
-# compte administratif), not merged upstream yet.
+# compte administratif), then the chart fixes (number formats and units, axis
+# and label placement, wording, outcome year), not merged upstream yet.
 DASHBOARD_URL=https://github.com/anthbel/rpf-country-dash.git
-DASHBOARD_REFS="refs/heads/togo/deploy-20261014"
-DASHBOARD_COMMITS="dfd9a01e919dcea461975611190346ffb8788b99"
-DASHBOARD_TREE=23eee1c6b4d7aa42c0376b2737bfd48f15577bd2
+DASHBOARD_REFS="refs/heads/togo/deploy-20261014-review"
+DASHBOARD_COMMITS="fcf6e5743a951515a86361217e05f79ffa0d6953"
+DASHBOARD_TREE=610ed84ec8366115313076f03f5a42045908127f
 
 # Indicator ETL: only the folders of the notebooks local_runner.notebooks() lists
 # (the repository's top-level files are always checked out).
@@ -19,8 +20,9 @@ INDICATORS_COMMIT=f3ba605a9ec4f5451b0a6fbc3e632e7150fd0ab6
 INDICATORS_PATHS="education geo health human_development pefa population poverty public_finance"
 
 # Togo BOOST ETL. The commit is on the anthbel fork: upstream main (f6db695) plus
-# Togo/TGO_execution.py, the budget-execution tables, not merged upstream yet.
+# Togo/TGO_execution.py, the budget-execution tables, then health sub-functions
+# and each region's latest outcome year, not merged upstream yet.
 BOOST_URL=https://github.com/anthbel/mega-boost.git
-BOOST_REF=refs/heads/togo/execution-fact
-BOOST_COMMIT=f771aedf480b4f69b830a0656951d2b95eb230a0
+BOOST_REF=refs/heads/fix/togo-health-subfunc-outcome-year
+BOOST_COMMIT=b6679789767306152ab5e5e7ad5e8c5ae25832af
 BOOST_PATHS="Togo"
