@@ -6,11 +6,11 @@
 # (a85edf6, which includes upstream main) merged with togo/execution-page, the
 # budget-execution page and its Excel exports (own tables, SIGFIP report tables,
 # compte administratif), then the chart fixes (number formats and units, axis
-# and label placement, wording, outcome year), not merged upstream yet.
+# and label placement, wording, outcome year, trend sentences), not merged upstream yet.
 DASHBOARD_URL=https://github.com/anthbel/rpf-country-dash.git
 DASHBOARD_REFS="refs/heads/togo/deploy-20261014-review"
-DASHBOARD_COMMITS="fcf6e5743a951515a86361217e05f79ffa0d6953"
-DASHBOARD_TREE=610ed84ec8366115313076f03f5a42045908127f
+DASHBOARD_COMMITS="9b23637dccfe98800d8a9ca6d66bcdb270bbab0d"
+DASHBOARD_TREE=1d0995e10d3b7992d1468ad7349c946f6788ec7f
 
 # Indicator ETL: only the folders of the notebooks local_runner.notebooks() lists
 # (the repository's top-level files are always checked out).
