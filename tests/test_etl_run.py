@@ -45,6 +45,12 @@ class ReadTogoFiscalTest(unittest.TestCase):
         self.assertEqual(row["tax_expenditure"], 160.34e9)
         self.assertEqual(row["data_source"], "Rapport d'exécution 2022")
 
+    def test_amounts_are_whole_francs(self):
+        row = read("annee;recettes;depenses;depenses_fiscales\n2021;921,58;1137,29;135,80\n").iloc[0]
+        self.assertEqual(row["tax_expenditure"], 135_800_000_000)
+        self.assertEqual(row["revenue_current_lcu"], 921_580_000_000)
+        self.assertEqual(row["expenditure_current_lcu"], 1_137_290_000_000)
+
     def test_missing_column(self):
         with self.assertRaisesRegex(ValueError, "missing column.*depenses"):
             read("annee;recettes\n2025;1381,7\n")

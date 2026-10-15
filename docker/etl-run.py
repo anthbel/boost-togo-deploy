@@ -99,7 +99,7 @@ def read_togo_fiscal(path):
         if required and values.isna().any():
             years = raw.loc[values.isna(), "annee"].str.strip()
             raise ValueError(f"{path}: {column} is empty for {', '.join(years)}")
-        return values * 1e9
+        return (values * 1e9).round()
 
     years = pd.to_numeric(raw["annee"].str.strip(), errors="coerce")
     not_years = years.isna() | (years % 1 != 0)
