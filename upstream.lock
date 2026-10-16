@@ -3,15 +3,16 @@
 #
 # Dashboard: one commit, or the merge of two, checked against the tree it must
 # produce (DASHBOARD_TREE). The commit below is on the anthbel fork: upstream Togo
-# (a85edf6, which includes upstream main) merged with togo/execution-page, the
-# budget-execution page and its Excel exports (own tables, SIGFIP report tables,
-# compte administratif), then the chart fixes (number formats and units, axis
-# and label placement, wording, outcome year, trend sentences) and the fiscal balance
-# on the DGBF's official figures without the composite view, not merged upstream yet.
+# (db5499d: money-axis units in the axis titles, regional and subnational
+# sentences, README on adding a chart) merged with fix/fiscal-balance-official-file:
+# the budget-execution page and its Excel exports (own tables, SIGFIP report
+# tables, compte administratif), the chart fixes (label placement, wording,
+# outcome year, trend sentences) and the fiscal balance on the DGBF's official
+# figures without the composite view, not merged upstream yet.
 DASHBOARD_URL=https://github.com/anthbel/rpf-country-dash.git
-DASHBOARD_REFS="refs/heads/fix/fiscal-balance-official-file"
-DASHBOARD_COMMITS="52469f96a1afabbca2260399a8d11179d86f011f"
-DASHBOARD_TREE=46866ed5749970c43ce8c6ea997d0b5be1285150
+DASHBOARD_REFS="refs/heads/togo/deploy-20261016"
+DASHBOARD_COMMITS="093a029597b5f7c00ce30a03771d548835105429"
+DASHBOARD_TREE=b32873976d73664820ca279b43c06fa9e6f5679e
 
 # Indicator ETL: only the folders of the notebooks local_runner.notebooks() lists
 # (the repository's top-level files are always checked out).
