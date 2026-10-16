@@ -35,6 +35,7 @@ import subprocess
 import sys
 import tempfile
 import time
+import traceback
 import urllib.request
 
 UPSTREAM = os.environ.get("UPSTREAM_DIR", "/opt/upstream")
@@ -127,7 +128,7 @@ def load_togo_fiscal():
         return "skipped"
     try:
         rows = read_togo_fiscal(TOGO_FISCAL_FILE)
-    except ValueError as error:
+    except (OSError, ValueError) as error:
         print(error, flush=True)
         return "failed"
     with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False) as f:
@@ -232,7 +233,13 @@ def main():
         print(f"==> {name}", flush=True)
         start = time.monotonic()
         if callable(command):
-            status = command()
+            # Runs in this process: an exception fails the step, as a crash fails a
+            # subprocess step, and the steps after it still run.
+            try:
+                status = command()
+            except Exception:
+                traceback.print_exc()
+                status = "failed"
         else:
             status = "failed" if subprocess.run(command, cwd=cwd, stdin=subprocess.DEVNULL).returncode else "ok"
         if name == BOUNDARIES_EXTRACT and status == "ok":

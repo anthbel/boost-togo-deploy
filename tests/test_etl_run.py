@@ -7,6 +7,7 @@ import importlib.machinery
 import importlib.util
 import math
 import os
+import sys
 import tempfile
 import unittest
 from unittest import mock
@@ -79,6 +80,35 @@ class StepOrderTest(unittest.TestCase):
     def test_missing_file_keeps_the_table(self):
         with mock.patch.object(etl_run, "TOGO_FISCAL_FILE", "/nonexistent/solde_budgetaire.csv"):
             self.assertEqual(etl_run.load_togo_fiscal(), "skipped")
+
+    def test_unreadable_file_fails_the_step(self):
+        with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False) as f:
+            f.write("annee;recettes;depenses\n2025;1381,7;1604,9\n")
+        os.chmod(f.name, 0)
+        try:
+            with mock.patch.object(etl_run, "TOGO_FISCAL_FILE", f.name):
+                self.assertEqual(etl_run.load_togo_fiscal(), "failed")
+        finally:
+            os.unlink(f.name)
+
+
+class RunTest(unittest.TestCase):
+    def test_a_step_that_raises_fails_and_the_next_steps_run(self):
+        ran = []
+
+        def broken():
+            raise PermissionError(13, "Permission denied", "/data/togo/solde_budgetaire.csv")
+
+        def fine():
+            ran.append("fine")
+            return "ok"
+
+        plan = [("inputs/broken", broken, None), ("inputs/fine", fine, None)]
+        with mock.patch.object(etl_run, "steps", return_value=plan), \
+                mock.patch.object(etl_run, "clear_cache", return_value=True), \
+                mock.patch.object(sys, "argv", ["etl-run"]):
+            self.assertEqual(etl_run.main(), 1)
+        self.assertEqual(ran, ["fine"])
 
 
 if __name__ == "__main__":
