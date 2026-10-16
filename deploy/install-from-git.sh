@@ -126,10 +126,12 @@ fi
 
 step "Répertoires d'entrée"
 as_boost mkdir -p data/togo data/pefa
-[ -z "$WORKBOOK" ] || install -o "$BOOST_USER" -g "$BOOST_USER" -m 0640 "$WORKBOOK" data/togo/
+# The pipeline container reads data/ as its own user (etl, uid 10002), not as
+# the service account: input files must be readable by others.
+[ -z "$WORKBOOK" ] || install -o "$BOOST_USER" -g "$BOOST_USER" -m 0644 "$WORKBOOK" data/togo/
 if [ -n "$PEFA_DIR" ]; then
   for f in pefa_2011_bronze.csv pefa_2016_bronze.csv; do
-    [ -f "$PEFA_DIR/$f" ] && install -o "$BOOST_USER" -g "$BOOST_USER" -m 0640 "$PEFA_DIR/$f" data/pefa/
+    [ -f "$PEFA_DIR/$f" ] && install -o "$BOOST_USER" -g "$BOOST_USER" -m 0644 "$PEFA_DIR/$f" data/pefa/
   done
 fi
 ls data/togo/*.xlsx >/dev/null 2>&1 || echo "ATTENTION : aucun classeur .xlsx dans data/togo : les étapes BOOST échoueront (guide DevOps, §6)"
